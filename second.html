@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <fieldset style="width:600px;margin:0 auto;">
+        <legend>用户登陆：</legend>
+        <form action="second.php" method="post">
+            <p><label for="">用户姓名：</label><input type="text" class="username" name="username"><span></span></p>
+            <p><label for="">用户密码：</label><input type="password" class="password" name="password"></p>
+            <p><button  value="用户登陆" >用户登陆</p>
+        </form>
+    </fieldset>
+    <script src="/upanddown/sha1.js"></script>
+    <script>
+        const user = document.querySelector('.username');
+        const pass = document.querySelector('.password');
+        const span = document.querySelector('span');
+        const form = document.querySelector('form');
+        const button = document.querySelector('button');
+        button.onclick = function(){
+          
+            let ajax = new XMLHttpRequest();
+            ajax.open('post','http://localhost/upanddown/second.php',true);
+            ajax.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+            alert(1);
+            ajax.send(`username=${user.value}&password=${hex_sha1(pass.value)}`);
+            alert(2);
+             ajax.onreadystatechange = function(){
+                if(ajax.readyState===4){
+                  
+               console.log(ajax.responseText)
+                if(!ajax.responseText){
+                    pass.value = '';
+                    alert('用户名或密码错误')
+                }else{
+                    alert('登录成功');
+                    location.href = 'location:http://localhost/upanddown/list.html';
+                }
+            }
+             }
+           
+        }
+    </script>
+</body>
+</html>

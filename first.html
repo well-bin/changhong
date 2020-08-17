@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    a{
+        color: black;
+    }
+    .denglu{
+        width: 40px;
+        height: 9px;
+        border: 1px grey solid;
+        background-color:whitesmoke;
+        margin-left: 30px;
+        border-radius:2px ;
+    }
+    </style>
+</head>
+<body>
+    <fieldset style="width:600px;margin:0 auto;">
+        <legend>用户注册：</legend>
+        <form action="first.php" method="post">
+            <p><label for="">用户姓名：</label><input type="text" class="username" name="username"><span></span></p>
+            <p><label for="">用户密码：</label><input type="password" class="password" name="password"></p>
+            <p><label for="">电子邮箱：</label><input type="text" class="email" name="email"></p>
+            <p><input type="submit" value="提交注册" name="submit"><span class="denglu"><a href="second.html">登陆</a></span></p>
+        </form>
+        <script>
+            const form = document.querySelector('form');
+            const user = document.querySelector('.username');
+            const span = document.querySelector('span')
+           ;
+            user.onblur = function(){
+                // var falg = true
+                let ajax = new XMLHttpRequest();
+                ajax.open('post','http://localhost/upanddown/first.php',true);
+                ajax.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+                ajax.send('name=' + this.value);
+                ajax.onreadystatechange = function(){
+                    if(ajax.readyState===4){
+                        console.log(ajax.responseText);
+                        if(!ajax.responseText){
+                            user.innerHTML = '√';
+                            user.style.color = 'green';
+                            // falg = true;
+                        }else{
+                            console.log(123);
+                            span.innerHTML = '用户名已存在';
+                            span.style.color = 'red';
+                            // falg = false;
+                        }
+                        
+                         }
+                //           form.onsubmit = function(){
+                //             if(!falg){
+                //             return false;
+                // }
+                }
+            }
+            user.onfocus = function(){
+                span.innerHTML = '';
+            }       
+                   
+            
+        </script>
+    </fieldset>
+</body>
+</html>
